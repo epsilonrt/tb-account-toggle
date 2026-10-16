@@ -7,3 +7,5 @@ cmake-build-*/
 CLAUDE.md
 # Machine-specific overrides of CMakePresets.json
 CMakeUserPresets.json
+# Logs of local tools
+*.log
