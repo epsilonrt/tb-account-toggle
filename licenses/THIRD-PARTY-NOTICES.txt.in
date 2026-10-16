@@ -15,8 +15,8 @@ Copyright (C) The Qt Company Ltd. and other contributors.
 https://www.qt.io
 
 The Qt libraries and plugins of this package (Qt Core, Qt Gui, Qt Widgets, and the
-platform, style and image format plugins) are the open source edition of Qt, used
-under the GNU Lesser General Public License version 3 (LGPL-3.0-only): see
+Qt modules and plugins they need on this system) are the open source edition of Qt,
+used under the GNU Lesser General Public License version 3 (LGPL-3.0-only): see
 licenses/LGPL-3.0.txt, which supplements licenses/GPL-3.0.txt.
 
 They are unmodified and dynamically linked: you may replace them with another,
