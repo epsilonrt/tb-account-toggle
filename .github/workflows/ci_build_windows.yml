@@ -22,7 +22,9 @@ jobs:
       # found by cmake/QtMinGWToolchain.cmake through the qtpaths on PATH)
       - uses: jurplel/install-qt-action@v4
         with:
-          version: '6.11.1'
+          # Latest Qt that aqtinstall (3.3.0) can install on Windows: it cannot read the
+          # Windows repository of Qt 6.11 yet
+          version: '6.10.3'
           arch: win64_mingw
           tools: 'tools_mingw1310 tools_ninja'
           cache: true
