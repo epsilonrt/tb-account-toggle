@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.27)
 # Windows: pick the compiler, Ninja and Qt kit of the Qt installation found on PATH
 include(cmake/QtMinGWToolchain.cmake)
 
-project(tb-account-toggle VERSION 1.0.0 LANGUAGES CXX)
+project(tb-account-toggle VERSION 1.0.1 LANGUAGES CXX)
 
 # Normalized install() destinations (e.g. "./licenses"), CMake >= 3.31
 if(POLICY CMP0177)
