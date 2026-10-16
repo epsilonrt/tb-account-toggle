@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Thunderbird Accounts
+Name[fr]=Comptes Thunderbird
+Comment=Temporarily disable or enable Thunderbird accounts
+Comment[fr]=Désactiver ou réactiver temporairement des comptes Thunderbird
+Exec=tb-account-toggle
+Icon=tb-account-toggle
+Terminal=false
+Categories=Utility;Network;Email;

@@ -44,6 +44,7 @@ public:
     const QList<Account> &accounts() const { return m_accounts; }
     const Account *defaultAccount() const;
     QString prefsFile() const { return m_prefsFile; }
+    QString profileDir() const { return m_profileDir; }
 
     // Write prefs.js so that exactly `activeIds` are enabled. Returns the backup path.
     QString apply(const QSet<QString> &activeIds, bool checkRunning = true);  // throws TbError

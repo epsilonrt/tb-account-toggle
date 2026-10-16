@@ -114,6 +114,7 @@ MainWindow::MainWindow(AccountState *state, bool manageThunderbird, QWidget *par
     auto *footer = new QHBoxLayout;
     m_status = secondaryLabel();
     m_status->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    m_status->setWordWrap(true);
     m_btnReset = new QPushButton(tr("Revert"));
     m_btnApply = new QPushButton(tr("Apply"));
     m_btnApply->setObjectName(QStringLiteral("accent"));
@@ -192,31 +193,52 @@ void MainWindow::resetSwitches()
 
 void MainWindow::apply()
 {
+    if (m_poll->isActive()) {
+        // "Cancel" while waiting for the user to close Thunderbird
+        stopWaiting();
+        refresh();
+        return;
+    }
     if (!m_manageThunderbird || !Thunderbird::isRunning()) {
         write(false);
         return;
     }
-    const auto answer = QMessageBox::question(this, appTitle(),
-        tr("Thunderbird must be closed to apply the changes.\n\n"
-           "Close it now? It will be restarted afterwards."));
-    if (answer != QMessageBox::Yes)
-        return;
 
-    m_restartExe = Thunderbird::executablePath();  // before it closes
-    setBusy(true, tr("Closing Thunderbird…"));
-    Thunderbird::requestClose();
-    m_closeClock.start();
+    m_launcher = Thunderbird::launcher(m_state->profileDir());  // before it closes
+    if (Thunderbird::canRequestClose()) {
+        const auto answer = QMessageBox::question(this, appTitle(),
+            tr("Thunderbird must be closed to apply the changes.\n\n"
+               "Close it now? It will be restarted afterwards."));
+        if (answer != QMessageBox::Yes)
+            return;
+        setBusy(true, tr("Closing Thunderbird…"));
+        Thunderbird::requestClose();
+        m_closeClock.start();
+    } else {
+        // No clean way to close it from here: wait for the user to do it, without time limit
+        setBusy(true, tr("Close Thunderbird to apply the changes. It will be restarted afterwards."));
+        setCursor(Qt::ArrowCursor);
+        m_btnApply->setText(tr("Cancel"));
+        m_btnApply->setEnabled(true);
+        m_closeClock.invalidate();
+    }
     m_poll->start();
+}
+
+void MainWindow::stopWaiting()
+{
+    m_poll->stop();
+    m_btnApply->setText(tr("Apply"));
+    setBusy(false);
 }
 
 void MainWindow::waitForClose()
 {
     if (!Thunderbird::isRunning()) {
-        m_poll->stop();
+        stopWaiting();
         write(true);
-    } else if (m_closeClock.elapsed() > CloseTimeoutMs) {
-        m_poll->stop();
-        setBusy(false);
+    } else if (m_closeClock.isValid() && m_closeClock.elapsed() > CloseTimeoutMs) {
+        stopWaiting();
         refresh();
         QMessageBox::warning(this, appTitle(),
             tr("Thunderbird did not close (a confirmation dialog may be open, or it is "
@@ -246,7 +268,7 @@ void MainWindow::write(bool restart)
     refresh();
     QString message = tr("Changes applied.");
     if (restart) {
-        if (Thunderbird::launch(m_restartExe.isEmpty() ? Thunderbird::executablePath() : m_restartExe))
+        if (Thunderbird::launch(m_launcher.isValid() ? m_launcher : Thunderbird::launcher(m_state->profileDir())))
             message = tr("Changes applied, Thunderbird restarted.");
         else
             message = tr("Changes applied. Please restart Thunderbird yourself.");

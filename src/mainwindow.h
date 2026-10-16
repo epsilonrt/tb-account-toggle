@@ -1,6 +1,7 @@
 #pragma once
 
 #include "accountstate.h"
+#include "thunderbird.h"
 
 #include <QElapsedTimer>
 #include <QFrame>
@@ -55,6 +56,7 @@ private:
     void resetSwitches();
     void apply();
     void waitForClose();
+    void stopWaiting();
     void write(bool restart);
 
     AccountState *m_state;
@@ -66,5 +68,5 @@ private:
     QPushButton *m_btnApply;
     QTimer *m_poll;
     QElapsedTimer m_closeClock;
-    QString m_restartExe;
+    Thunderbird::Launcher m_launcher;
 };

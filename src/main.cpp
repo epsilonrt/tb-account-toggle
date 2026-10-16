@@ -70,9 +70,12 @@ int main(int argc, char *argv[])
     installTranslations(app);
     QApplication::setApplicationDisplayName(MainWindow::appTitle());
     QApplication::setWindowIcon(QIcon(QStringLiteral(":/app.ico")));
+#ifdef Q_OS_WIN
+    // Windows 11 look; other systems keep their native style and font
     if (QStyleFactory::keys().contains(QStringLiteral("windows11"), Qt::CaseInsensitive))
         QApplication::setStyle(QStringLiteral("windows11"));
     QApplication::setFont(QFont(QStringLiteral("Segoe UI Variable Text"), 10));
+#endif
 
     const auto restyle = [&app] { app.setStyleSheet(styleSheet(app.palette())); };
     restyle();
