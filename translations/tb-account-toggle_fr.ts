@@ -61,12 +61,17 @@
         </message>
         <message>
             <location filename="../src/mainwindow.cpp" line="119" />
-            <location filename="../src/mainwindow.cpp" line="231" />
+            <location filename="../src/mainwindow.cpp" line="260" />
             <source>Apply</source>
             <translation>Appliquer</translation>
         </message>
+        <message>
+            <location filename="../src/mainwindow.cpp" line="124" />
+            <source>About</source>
+            <translation>À propos</translation>
+        </message>
         <message numerus="yes">
-            <location filename="../src/mainwindow.cpp" line="171" />
+            <location filename="../src/mainwindow.cpp" line="174" />
             <source>%n pending change(s)</source>
             <translation>
                 <numerusform>%n modification en attente</numerusform>
@@ -74,7 +79,22 @@
             </translation>
         </message>
         <message>
-            <location filename="../src/mainwindow.cpp" line="210" />
+            <location filename="../src/mainwindow.cpp" line="192" />
+            <source>About %1</source>
+            <translation>À propos de %1</translation>
+        </message>
+        <message>
+            <location filename="../src/mainwindow.cpp" line="197" />
+            <source>&lt;p&gt;Temporarily disables or enables Thunderbird accounts.&lt;/p&gt;&lt;p&gt;Copyright © 2026 Pascal JEAN&lt;br&gt;Distributed under the BSD 3-Clause license.&lt;br&gt;&lt;a href="%1"&gt;%1&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Built with Qt %2, used under the GNU LGPL v3. The licenses of the bundled components are listed in THIRD-PARTY-NOTICES.txt.&lt;/p&gt;</source>
+            <translation>&lt;p&gt;Désactive ou réactive temporairement des comptes Thunderbird.&lt;/p&gt;&lt;p&gt;Copyright © 2026 Pascal JEAN&lt;br&gt;Distribué sous licence BSD 3-Clause.&lt;br&gt;&lt;a href="%1"&gt;%1&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Réalisé avec Qt %2, utilisé sous licence GNU LGPL v3. Les licences des composants fournis sont indiquées dans THIRD-PARTY-NOTICES.txt.&lt;/p&gt;</translation>
+        </message>
+        <message>
+            <location filename="../src/mainwindow.cpp" line="204" />
+            <source>About Qt</source>
+            <translation>À propos de Qt</translation>
+        </message>
+        <message>
+            <location filename="../src/mainwindow.cpp" line="239" />
             <source>Thunderbird must be closed to apply the changes.
 
 Close it now? It will be restarted afterwards.</source>
@@ -83,22 +103,22 @@ Close it now? It will be restarted afterwards.</source>
 Le fermer maintenant ? Il sera relancé ensuite.</translation>
         </message>
         <message>
-            <location filename="../src/mainwindow.cpp" line="214" />
+            <location filename="../src/mainwindow.cpp" line="243" />
             <source>Closing Thunderbird…</source>
             <translation>Fermeture de Thunderbird…</translation>
         </message>
         <message>
-            <location filename="../src/mainwindow.cpp" line="219" />
+            <location filename="../src/mainwindow.cpp" line="248" />
             <source>Close Thunderbird to apply the changes. It will be restarted afterwards.</source>
             <translation>Fermez Thunderbird pour appliquer les changements. Il sera relancé ensuite.</translation>
         </message>
         <message>
-            <location filename="../src/mainwindow.cpp" line="221" />
+            <location filename="../src/mainwindow.cpp" line="250" />
             <source>Cancel</source>
             <translation>Annuler</translation>
         </message>
         <message>
-            <location filename="../src/mainwindow.cpp" line="244" />
+            <location filename="../src/mainwindow.cpp" line="273" />
             <source>Thunderbird did not close (a confirmation dialog may be open, or it is minimized to the notification area).
 
 Close it yourself, then click Apply again.</source>
@@ -107,17 +127,17 @@ Close it yourself, then click Apply again.</source>
 Fermez-le vous-même, puis cliquez à nouveau sur Appliquer.</translation>
         </message>
         <message>
-            <location filename="../src/mainwindow.cpp" line="269" />
+            <location filename="../src/mainwindow.cpp" line="298" />
             <source>Changes applied.</source>
             <translation>Modifications appliquées.</translation>
         </message>
         <message>
-            <location filename="../src/mainwindow.cpp" line="272" />
+            <location filename="../src/mainwindow.cpp" line="301" />
             <source>Changes applied, Thunderbird restarted.</source>
             <translation>Modifications appliquées, Thunderbird relancé.</translation>
         </message>
         <message>
-            <location filename="../src/mainwindow.cpp" line="274" />
+            <location filename="../src/mainwindow.cpp" line="303" />
             <source>Changes applied. Please restart Thunderbird yourself.</source>
             <translation>Modifications appliquées. Relancez Thunderbird vous-même.</translation>
         </message>

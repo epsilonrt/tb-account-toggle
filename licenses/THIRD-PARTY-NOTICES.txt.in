@@ -1,0 +1,25 @@
+Third-party software included in this package
+=============================================
+
+Thunderbird Accounts (tb-account-toggle) @PROJECT_VERSION@
+Copyright (c) 2026, Pascal JEAN
+Distributed under the BSD 3-Clause license, see LICENSE.txt.
+https://github.com/epsilonrt/tb-account-toggle
+
+This package also contains the following components, each under its own license.
+
+
+Qt @Qt6_VERSION@
+--------
+Copyright (C) The Qt Company Ltd. and other contributors.
+https://www.qt.io
+
+The Qt libraries and plugins of this package (Qt Core, Qt Gui, Qt Widgets, and the
+Qt modules and plugins they need on this system) are the open source edition of Qt,
+used under the GNU Lesser General Public License version 3 (LGPL-3.0-only): see
+licenses/LGPL-3.0.txt, which supplements licenses/GPL-3.0.txt.
+
+They are unmodified and dynamically linked: you may replace them with another,
+compatible build of Qt, including one you modified. The corresponding source code is
+available from https://download.qt.io/official_releases/qt/ and https://code.qt.io.
+@NOTICE_MINGW@
