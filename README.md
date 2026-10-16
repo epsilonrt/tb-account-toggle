@@ -80,8 +80,8 @@ sudo apt install cmake ninja-build g++ dpkg-dev qt6-base-dev qt6-tools-dev \
   qt6-tools-dev-tools qt6-l10n-tools qt6-translations-l10n
 ```
 
-The GitHub Actions workflow (`.github/workflows/build.yml`) builds, tests and packages on
-the three systems, and publishes the packages when a `v*` tag is pushed.
+The GitHub Actions workflows (`.github/workflows/ci_build_*.yml`) build, test and package
+on the three systems, and publish the packages when a `v*` tag is pushed.
 
 ### Translations
 

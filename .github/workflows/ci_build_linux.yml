@@ -1,0 +1,46 @@
+# Build, test and package on Debian 13 (trixie), against the distribution's Qt.
+# On a v* tag, the Debian package is attached to the GitHub release.
+name: Build Linux
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: debian:trixie
+    steps:
+      - name: Dependencies
+        run: |
+          apt-get update -qq
+          DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends \
+            ca-certificates git cmake ninja-build g++ dpkg-dev file \
+            qt6-base-dev qt6-tools-dev qt6-tools-dev-tools qt6-l10n-tools qt6-translations-l10n libgl-dev
+      - uses: actions/checkout@v5
+
+      - name: Configure
+        run: cmake -S . -B build -G Ninja
+      - name: Build
+        run: cmake --build build
+      - name: Test
+        run: ctest --test-dir build --output-on-failure
+      - name: Package
+        run: cmake --build build --target installer
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux
+          path: build/*.deb
+
+      - name: Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/*.deb

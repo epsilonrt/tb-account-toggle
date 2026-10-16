@@ -1,0 +1,53 @@
+# Build, test and package on Windows (Inno Setup installer).
+# On a v* tag, the installer is attached to the GitHub release.
+name: Build Windows
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      # Qt MinGW kit with the MinGW and Ninja it ships with (layout of the Qt installer,
+      # found by cmake/QtMinGWToolchain.cmake through the qtpaths on PATH)
+      - uses: jurplel/install-qt-action@v4
+        with:
+          version: '6.11.1'
+          arch: win64_mingw
+          tools: 'tools_mingw1310 tools_ninja'
+          cache: true
+
+      - name: Inno Setup
+        shell: pwsh
+        run: |
+          if (-not (Test-Path "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe")) { choco install innosetup -y --no-progress }
+
+      - name: Configure
+        run: cmake -S . -B build -G Ninja
+      - name: Build
+        run: cmake --build build
+      - name: Test
+        run: ctest --test-dir build --output-on-failure
+      - name: Package
+        run: cmake --build build --target installer
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows
+          path: build/tb-account-toggle-setup-*.exe
+
+      - name: Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/tb-account-toggle-setup-*.exe

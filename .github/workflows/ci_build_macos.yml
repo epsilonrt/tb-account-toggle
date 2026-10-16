@@ -1,0 +1,48 @@
+# Build, test and package on macOS (universal disk image).
+# On a v* tag, the disk image is attached to the GitHub release.
+name: Build macOS
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: jurplel/install-qt-action@v4
+        with:
+          version: '6.11.1'
+          cache: true
+
+      - name: Ninja
+        run: brew list ninja >/dev/null 2>&1 || brew install ninja
+
+      # Universal binary: Apple Silicon and Intel
+      - name: Configure
+        run: cmake -S . -B build -G Ninja "-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64"
+      - name: Build
+        run: cmake --build build
+      - name: Test
+        run: ctest --test-dir build --output-on-failure
+      - name: Package
+        run: cmake --build build --target installer
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macos
+          path: build/*.dmg
+
+      - name: Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/*.dmg
