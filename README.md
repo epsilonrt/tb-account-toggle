@@ -1,6 +1,6 @@
 # tb-account-toggle
 
-[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/epsilonrt/tb-account-toggle?include_prereleases)](https://github.com/epsilonrt/tb-account-toggle/releases)
+[![GitHub release](https://badgen.net/github/release/epsilonrt/tb-account-toggle)](https://github.com/epsilonrt/tb-account-toggle/releases)
 [![Build Linux](https://github.com/epsilonrt/tb-account-toggle/actions/workflows/ci_build_linux.yml/badge.svg)](https://github.com/epsilonrt/tb-account-toggle/actions/workflows/ci_build_linux.yml)
 [![Build Windows](https://github.com/epsilonrt/tb-account-toggle/actions/workflows/ci_build_windows.yml/badge.svg)](https://github.com/epsilonrt/tb-account-toggle/actions/workflows/ci_build_windows.yml)
 [![Build macOS](https://github.com/epsilonrt/tb-account-toggle/actions/workflows/ci_build_macos.yml/badge.svg)](https://github.com/epsilonrt/tb-account-toggle/actions/workflows/ci_build_macos.yml)
