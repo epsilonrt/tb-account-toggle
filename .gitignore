@@ -1,0 +1,9 @@
+build/
+cmake-build-*/
+*.user
+# Shortcuts hold machine-specific absolute paths
+*.lnk
+# Local Claude Code instructions, not versioned
+CLAUDE.md
+# Machine-specific overrides of CMakePresets.json
+CMakeUserPresets.json

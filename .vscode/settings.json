@@ -1,0 +1,4 @@
+{
+  // Ninja is located by cmake/QtMinGWToolchain.cmake, even when it is not on PATH
+  "cmake.generator": "Ninja"
+}
