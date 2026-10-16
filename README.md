@@ -1,9 +1,9 @@
 # tb-account-toggle
 
-[![GitHub release](https://badgen.net/github/release/epsilonrt/tb-account-toggle)](https://github.com/epsilonrt/tb-account-toggle/releases)
-[![Build Linux](https://github.com/epsilonrt/tb-account-toggle/actions/workflows/ci_build_linux.yml/badge.svg)](https://github.com/epsilonrt/tb-account-toggle/actions/workflows/ci_build_linux.yml)
-[![Build Windows](https://github.com/epsilonrt/tb-account-toggle/actions/workflows/ci_build_windows.yml/badge.svg)](https://github.com/epsilonrt/tb-account-toggle/actions/workflows/ci_build_windows.yml)
-[![Build macOS](https://github.com/epsilonrt/tb-account-toggle/actions/workflows/ci_build_macos.yml/badge.svg)](https://github.com/epsilonrt/tb-account-toggle/actions/workflows/ci_build_macos.yml)
+[![GitHub release](https://badgen.net/github/release/epsilonrt/tb-account-toggle?cache=300)](https://github.com/epsilonrt/tb-account-toggle/releases)
+[![Build Linux](https://github.com/epsilonrt/tb-account-toggle/actions/workflows/ci_build_linux.yml/badge.svg?branch=dev)](https://github.com/epsilonrt/tb-account-toggle/actions/workflows/ci_build_linux.yml?query=branch%3Adev)
+[![Build Windows](https://github.com/epsilonrt/tb-account-toggle/actions/workflows/ci_build_windows.yml/badge.svg?branch=dev)](https://github.com/epsilonrt/tb-account-toggle/actions/workflows/ci_build_windows.yml?query=branch%3Adev)
+[![Build macOS](https://github.com/epsilonrt/tb-account-toggle/actions/workflows/ci_build_macos.yml/badge.svg?branch=dev)](https://github.com/epsilonrt/tb-account-toggle/actions/workflows/ci_build_macos.yml?query=branch%3Adev)
 
 A small utility for Windows, Linux and macOS to **temporarily disable Thunderbird mail
 accounts** and enable them again, from a window with one switch per account.
