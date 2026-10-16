@@ -1,6 +1,6 @@
 # tb-account-toggle
 
-[![GitHub release](https://badgen.net/github/release/epsilonrt/tb-account-toggle)](https://github.com/epsilonrt/tb-account-toggle/releases)
+[![GitHub release](https://badgen.net/github/release/epsilonrt/tb-account-toggle?cache=300)](https://github.com/epsilonrt/tb-account-toggle/releases)
 [![Build Linux](https://github.com/epsilonrt/tb-account-toggle/actions/workflows/ci_build_linux.yml/badge.svg?branch=dev)](https://github.com/epsilonrt/tb-account-toggle/actions/workflows/ci_build_linux.yml?query=branch%3Adev)
 [![Build Windows](https://github.com/epsilonrt/tb-account-toggle/actions/workflows/ci_build_windows.yml/badge.svg?branch=dev)](https://github.com/epsilonrt/tb-account-toggle/actions/workflows/ci_build_windows.yml?query=branch%3Adev)
 [![Build macOS](https://github.com/epsilonrt/tb-account-toggle/actions/workflows/ci_build_macos.yml/badge.svg?branch=dev)](https://github.com/epsilonrt/tb-account-toggle/actions/workflows/ci_build_macos.yml?query=branch%3Adev)
