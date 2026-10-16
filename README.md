@@ -101,3 +101,11 @@ file to `qt_add_translations()` in `CMakeLists.txt`.
 ## License
 
 [BSD 3-Clause](LICENSE)
+
+The Windows and macOS packages also contain the open source edition of Qt, used under
+the [LGPL-3.0](licenses/LGPL-3.0.txt) (dynamically linked, unmodified), and on Windows
+the MinGW-w64 runtime (GCC runtime libraries under the GPL-3.0 with the GCC Runtime
+Library Exception, winpthreads under the MIT license). Their notices and license texts
+are installed with the application (`THIRD-PARTY-NOTICES.txt` and `licenses/`). The
+Debian package uses the distribution's Qt and installs this project's license as
+`/usr/share/doc/tb-account-toggle/copyright`.

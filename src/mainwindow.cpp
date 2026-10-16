@@ -121,6 +121,9 @@ MainWindow::MainWindow(AccountState *state, bool manageThunderbird, QWidget *par
     m_btnApply->setDefault(true);
     connect(m_btnReset, &QPushButton::clicked, this, &MainWindow::resetSwitches);
     connect(m_btnApply, &QPushButton::clicked, this, &MainWindow::apply);
+    auto *btnAbout = new QPushButton(tr("About"));
+    connect(btnAbout, &QPushButton::clicked, this, &MainWindow::showAbout);
+    footer->addWidget(btnAbout);
     footer->addWidget(m_status);
     footer->addWidget(m_btnReset);
     footer->addWidget(m_btnApply);
@@ -181,6 +184,32 @@ void MainWindow::setBusy(bool busy, const QString &message)
     setCursor(busy ? Qt::WaitCursor : Qt::ArrowCursor);
     if (!message.isEmpty())
         m_status->setText(message);
+}
+
+void MainWindow::showAbout()
+{
+    QMessageBox box(this);
+    box.setWindowTitle(tr("About %1").arg(appTitle()));
+    box.setIconPixmap(windowIcon().pixmap(64, 64));
+    box.setTextFormat(Qt::RichText);
+    box.setText(QStringLiteral("<h3>%1 %2</h3>").arg(appTitle(), QCoreApplication::applicationVersion()));
+    box.setInformativeText(
+        tr("<p>Temporarily disables or enables Thunderbird accounts.</p>"
+           "<p>Copyright © 2026 Pascal JEAN<br>"
+           "Distributed under the BSD 3-Clause license.<br>"
+           "<a href=\"%1\">%1</a></p>"
+           "<p>Built with Qt %2, used under the GNU LGPL v3. "
+           "The licenses of the bundled components are listed in THIRD-PARTY-NOTICES.txt.</p>")
+            .arg(QStringLiteral("https://github.com/epsilonrt/tb-account-toggle"), QString::fromLatin1(qVersion())));
+    QPushButton *aboutQt = box.addButton(tr("About Qt"), QMessageBox::ActionRole);
+    box.addButton(QMessageBox::Close);
+    // Any button closes a QMessageBox: come back to it after Qt's own dialog
+    for (;;) {
+        box.exec();
+        if (box.clickedButton() != aboutQt)
+            break;
+        QMessageBox::aboutQt(this);
+    }
 }
 
 void MainWindow::resetSwitches()
