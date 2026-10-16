@@ -54,6 +54,7 @@ private:
     void refresh();
     void setBusy(bool busy, const QString &message = {});
     void resetSwitches();
+    void showAbout();
     void apply();
     void waitForClose();
     void stopWaiting();

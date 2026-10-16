@@ -4,7 +4,12 @@ cmake_minimum_required(VERSION 3.27)
 # Windows: pick the compiler, Ninja and Qt kit of the Qt installation found on PATH
 include(cmake/QtMinGWToolchain.cmake)
 
-project(tb-account-toggle VERSION 1.0.0 LANGUAGES CXX)
+project(tb-account-toggle VERSION 1.0.1 LANGUAGES CXX)
+
+# Normalized install() destinations (e.g. "./licenses"), CMake >= 3.31
+if(POLICY CMP0177)
+    cmake_policy(SET CMP0177 NEW)
+endif()
 
 # Release by default with single-config generators (Ninja, Makefiles)
 get_property(is_multi_config GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
@@ -137,6 +142,55 @@ if(MINGW)
         "${MINGW_BIN_DIR}/libstdc++-6.dll"
         "${MINGW_BIN_DIR}/libwinpthread-1.dll"
         DESTINATION ${CMAKE_INSTALL_BINDIR})
+endif()
+
+# --------------------------------------------------------------------------
+# Licenses: this project's (BSD 3-Clause), and those of the bundled third-party code
+# --------------------------------------------------------------------------
+if(WIN32 OR APPLE)
+    # Qt (LGPL-3.0) and, on Windows, the MinGW runtime are shipped with the app
+    set(NOTICE_MINGW "")
+    set(mingw_licenses "")
+    if(MINGW)
+        # License texts shipped with the MinGW toolchain that built the app
+        get_filename_component(mingw_licenses_dir "${MINGW_BIN_DIR}/../licenses" ABSOLUTE)
+        set(winpthreads_copying "${mingw_licenses_dir}/winpthreads/COPYING")
+        set(gcc_runtime_exception "${mingw_licenses_dir}/gcc/COPYING.RUNTIME")
+        if(EXISTS "${winpthreads_copying}" AND EXISTS "${gcc_runtime_exception}")
+            set(mingw_licenses "${winpthreads_copying}" "${gcc_runtime_exception}")
+        else()
+            message(WARNING "MinGW license texts not found in ${mingw_licenses_dir}")
+        endif()
+        string(CONCAT NOTICE_MINGW
+            "\n\nMinGW-w64 runtime\n-----------------\n"
+            "libgcc_s_seh-1.dll and libstdc++-6.dll are the GCC runtime libraries,\n"
+            "Copyright (C) Free Software Foundation, Inc., https://gcc.gnu.org. They are\n"
+            "under the GPL-3.0 with the GCC Runtime Library Exception 3.1, which allows\n"
+            "distributing them with programs under any license: see licenses/GPL-3.0.txt\n"
+            "and licenses/GCC-RUNTIME-EXCEPTION.txt.\n\n"
+            "libwinpthread-1.dll is the winpthreads library of the MinGW-w64 project,\n"
+            "https://www.mingw-w64.org, under the MIT license: see\n"
+            "licenses/winpthreads-COPYING.txt.\n")
+    endif()
+    configure_file(licenses/THIRD-PARTY-NOTICES.txt.in THIRD-PARTY-NOTICES.txt @ONLY)
+
+    if(WIN32)
+        set(license_dir ${CMAKE_INSTALL_BINDIR})
+    else()
+        set(license_dir .)  # disk image root, next to the application bundle
+    endif()
+    install(FILES LICENSE DESTINATION ${license_dir} RENAME LICENSE.txt)
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/THIRD-PARTY-NOTICES.txt" DESTINATION ${license_dir})
+    install(FILES licenses/LGPL-3.0.txt licenses/GPL-3.0.txt DESTINATION ${license_dir}/licenses)
+    if(mingw_licenses)
+        list(GET mingw_licenses 0 winpthreads_copying)
+        list(GET mingw_licenses 1 gcc_runtime_exception)
+        install(FILES "${winpthreads_copying}" DESTINATION ${license_dir}/licenses RENAME winpthreads-COPYING.txt)
+        install(FILES "${gcc_runtime_exception}" DESTINATION ${license_dir}/licenses RENAME GCC-RUNTIME-EXCEPTION.txt)
+    endif()
+else()
+    # Linux: Qt comes from the distribution; Debian location for the package's license
+    install(FILES LICENSE DESTINATION ${CMAKE_INSTALL_DATADIR}/doc/tb-account-toggle RENAME copyright)
 endif()
 
 # --------------------------------------------------------------------------
