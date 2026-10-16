@@ -1,7 +1,14 @@
 # tb-account-toggle
 
+[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/epsilonrt/tb-account-toggle?include_prereleases)](https://github.com/epsilonrt/tb-account-toggle/releases)
+[![Build Linux](https://github.com/epsilonrt/tb-account-toggle/actions/workflows/ci_build_linux.yml/badge.svg)](https://github.com/epsilonrt/tb-account-toggle/actions/workflows/ci_build_linux.yml)
+[![Build Windows](https://github.com/epsilonrt/tb-account-toggle/actions/workflows/ci_build_windows.yml/badge.svg)](https://github.com/epsilonrt/tb-account-toggle/actions/workflows/ci_build_windows.yml)
+[![Build macOS](https://github.com/epsilonrt/tb-account-toggle/actions/workflows/ci_build_macos.yml/badge.svg)](https://github.com/epsilonrt/tb-account-toggle/actions/workflows/ci_build_macos.yml)
+
 A small utility for Windows, Linux and macOS to **temporarily disable Thunderbird mail
 accounts** and enable them again, from a window with one switch per account.
+
+![Thunderbird Accounts on Linux](doc/screenshot.png)
 
 Thunderbird cannot disable an IMAP account: even with automatic mail checks turned off,
 it reconnects as soon as you click one of the account's folders (see
