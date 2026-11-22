@@ -45,7 +45,13 @@ namespace Thunderbird {
 
 QStringList profileRoots()
 {
-    return {qEnvironmentVariable("APPDATA") + QStringLiteral("/Thunderbird")};
+    QStringList roots{qEnvironmentVariable("APPDATA") + QStringLiteral("/Thunderbird")};
+    // Microsoft Store (MSIX) install: %APPDATA% is redirected into the package folder
+    const QDir packages(qEnvironmentVariable("LOCALAPPDATA") + QStringLiteral("/Packages"));
+    const QStringList found = packages.entryList({QStringLiteral("MozillaThunderbird*")}, QDir::Dirs | QDir::NoDotAndDotDot);
+    for (const QString &pkg : found)
+        roots << packages.filePath(pkg + QStringLiteral("/LocalCache/Roaming/Thunderbird"));
+    return roots;
 }
 
 bool isRunning()
@@ -76,10 +82,15 @@ void requestClose()
 
 Launcher launcher(const QString &)
 {
+    // Microsoft Store install: its binary under WindowsApps cannot be started directly,
+    // only through the app execution alias
+    const QString storeAlias = QDir::toNativeSeparators(qEnvironmentVariable("LOCALAPPDATA")
+                                                        + QStringLiteral("/Microsoft/WindowsApps/thunderbird.exe"));
+
     // Running process first, then the registry, then the default install folders
     for (DWORD pid : thunderbirdPids())
         if (const QString path = processImagePath(pid); !path.isEmpty())
-            return {path, {}};
+            return {path.contains(QStringLiteral("\\WindowsApps\\"), Qt::CaseInsensitive) ? storeAlias : path, {}};
 
     for (const char *hive : {"HKEY_LOCAL_MACHINE", "HKEY_CURRENT_USER"}) {
         QSettings reg(QString::fromLatin1(hive) + QStringLiteral(R"(\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\thunderbird.exe)"),
@@ -94,6 +105,8 @@ Launcher launcher(const QString &)
         if (QFileInfo(path).isFile())
             return {QDir::toNativeSeparators(path), {}};
     }
+    if (QFileInfo::exists(storeAlias))
+        return {storeAlias, {}};
     return {};
 }
 
