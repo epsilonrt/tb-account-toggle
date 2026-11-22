@@ -34,7 +34,7 @@ The default Thunderbird profile is looked up in:
 
 | System | Folder |
 |---|---|
-| Windows | `%APPDATA%\Thunderbird` |
+| Windows | `%APPDATA%\Thunderbird`, Microsoft Store `%LOCALAPPDATA%\Packages\MozillaThunderbird.*\LocalCache\Roaming\Thunderbird` |
 | Linux | `~/.thunderbird`, Snap `~/snap/thunderbird/common/.thunderbird`, Flatpak `~/.var/app/org.mozilla.Thunderbird/.thunderbird` |
 | macOS | `~/Library/Thunderbird` |
 
