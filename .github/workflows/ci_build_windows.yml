@@ -13,9 +13,11 @@ on:
     branches: [dev]
   workflow_dispatch:
 
-# A newer push to the same branch or pull request supersedes the running build
+# A newer push to the same branch or pull request supersedes the running build. Pull
+# requests are grouped by number: a pull_request run that starts after the merge gets
+# github.ref = the base branch, and would otherwise cancel the build of the merge on dev.
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || github.ref }}
   cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
 
 permissions:
