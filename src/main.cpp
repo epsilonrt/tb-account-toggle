@@ -14,6 +14,10 @@
 #include <QStyleHints>
 #include <QTranslator>
 
+#ifdef Q_OS_WIN
+#include <windows.h>
+#endif
+
 namespace {
 
 QString styleSheet(const QPalette &pal)
@@ -64,6 +68,10 @@ void installTranslations(QApplication &app)
 
 int main(int argc, char *argv[])
 {
+#ifdef Q_OS_WIN
+    // Seen by the installer and uninstaller (AppMutex); released by Windows on exit
+    CreateMutexW(nullptr, FALSE, L"" APP_MUTEX_NAME);
+#endif
     QApplication app(argc, argv);
     QApplication::setApplicationName(QStringLiteral("tb-account-toggle"));
     QApplication::setApplicationVersion(QStringLiteral(APP_VERSION));

@@ -40,10 +40,23 @@ jobs:
           tools: 'tools_mingw1310 tools_ninja'
           cache: true
 
+      # Pinned version (the runner image may ship another one): CPack's INNOSETUP
+      # generator targets Inno Setup 6
       - name: Inno Setup
         shell: pwsh
+        env:
+          INNOSETUP_VERSION: 6.7.1
         run: |
-          if (-not (Test-Path "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe")) { choco install innosetup -y --no-progress }
+          function Get-InnoVersion {
+            (Get-ItemProperty HKLM:\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*, HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* -ErrorAction SilentlyContinue |
+              Where-Object DisplayName -like 'Inno Setup*').DisplayVersion
+          }
+          if ((Get-InnoVersion) -ne $env:INNOSETUP_VERSION) {
+            choco install innosetup --version=$env:INNOSETUP_VERSION --allow-downgrade --force -y --no-progress
+          }
+          $installed = Get-InnoVersion
+          if ($installed -ne $env:INNOSETUP_VERSION) { throw "Inno Setup $installed installed, $env:INNOSETUP_VERSION expected" }
+          "Inno Setup $installed"
 
       - name: Configure
         run: cmake -S . -B build -G Ninja
