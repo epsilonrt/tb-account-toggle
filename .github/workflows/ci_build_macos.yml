@@ -2,20 +2,19 @@
 # On a v* tag, the disk image is attached to the GitHub release.
 name: Build macOS
 
-# Runs on pull requests into dev, on pushes to dev (the merged result: its checks also
-# satisfy the pull request dev -> main, which has the same head commit), and on v* tags
-# (release packages). main only receives commits already tested on dev.
+# Runs on pull requests into dev and into main (the dev -> main pull request gets its
+# own build, required by the main ruleset), and on v* tags (release packages). Merging
+# into dev does not build again: the pull request already built the merged result.
 on:
   push:
-    branches: [dev]
     tags: ['v*']
   pull_request:
-    branches: [dev]
+    branches: [dev, main]
   workflow_dispatch:
 
-# A newer push to the same branch or pull request supersedes the running build. Pull
-# requests are grouped by number: a pull_request run that starts after the merge gets
-# github.ref = the base branch, and would otherwise cancel the build of the merge on dev.
+# A newer push to the same pull request supersedes the running build. Pull requests are
+# grouped by number: a pull_request run that starts after the merge gets github.ref =
+# the base branch, and would otherwise share its group with other pull requests.
 concurrency:
   group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || github.ref }}
   cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
