@@ -59,6 +59,10 @@ add_executable(tb-account-toggle WIN32 MACOSX_BUNDLE
 )
 target_link_libraries(tb-account-toggle PRIVATE tbcore Qt6::Widgets)
 target_compile_definitions(tb-account-toggle PRIVATE APP_VERSION="${PROJECT_VERSION}")
+# Named mutex held while the app runs: the installer and uninstaller (AppMutex)
+# ask to close the app first, so that no file is left locked in {app}
+set(APP_MUTEX_NAME "tb-account-toggle-6B0C3E2A-8F4D-4C1B-9A57-3E2D1F0B7C64")
+target_compile_definitions(tb-account-toggle PRIVATE APP_MUTEX_NAME="${APP_MUTEX_NAME}")
 
 if(WIN32)
     target_sources(tb-account-toggle PRIVATE resources/app.rc)
@@ -220,6 +224,7 @@ if(WIN32)
     set(CPACK_INNOSETUP_PROGRAM_MENU_FOLDER ".")
     set(CPACK_INNOSETUP_SETUP_PrivilegesRequired lowest)
     set(CPACK_INNOSETUP_SETUP_AppId "{{6B0C3E2A-8F4D-4C1B-9A57-3E2D1F0B7C64}")
+    set(CPACK_INNOSETUP_SETUP_AppMutex "${APP_MUTEX_NAME}")
     set(CPACK_INNOSETUP_SETUP_UninstallDisplayIcon "{app}\\tb-account-toggle.exe")
     set(CPACK_INNOSETUP_SETUP_UninstallDisplayName "{cm:AppTitle}")
 elseif(APPLE)

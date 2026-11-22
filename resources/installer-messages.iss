@@ -8,3 +8,7 @@ french.AppTitle=Comptes Thunderbird
 ; the nested {cm:AppTitle} constant
 [Run]
 Filename: "{app}\tb-account-toggle.exe"; Description: "{cm:LaunchProgram,{cm:AppTitle}}"; Flags: nowait postinstall skipifsilent
+
+; Remove what the uninstaller did not log (or could not delete), then {app} itself
+[UninstallDelete]
+Type: filesandordirs; Name: "{app}"
